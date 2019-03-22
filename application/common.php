@@ -10,3 +10,9 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+
+//过滤文章
+function getNewsContent($content)
+{
+    return mb_substr(strip_tags($content),0,50).'>>>';
+}

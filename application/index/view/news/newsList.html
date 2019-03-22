@@ -1,0 +1,80 @@
+{include file="public/header"}
+<div class="main-wrapper oh">
+
+    <!-- Page Title -->
+    <section class="page-title text-center" style="background-image: url(/static/img/new/news-title.jpg);">
+        <div class="container relative clearfix">
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1>新 闻 活 动</h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">主 页</a>
+                        </li>
+                        <li class="active">
+                            新 闻 活 动
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section> <!-- end page title -->
+
+    <!-- Blog Standard -->
+    <section class="section-wrap blog-standard pb-70">
+        <div class="container relative">
+            <div class="row">
+
+                <!-- content -->
+                <div class="col-md-12 post-content mb-60">
+                    {volist name="$news" id="item"}
+                    <!-- text only post -->
+                    <article class="entry-item">
+                        <div class="entry">
+                            <h2 class="entry-title">
+                                <a href="blog-single.html">{$item.title}</a>
+                            </h2>
+                            <ul class="entry-meta">
+                                <li class="entry-date">
+                                    {$item.create_time}
+                                </li>
+                            </ul>
+                            <div class="entry-content">
+                                <p>
+
+                                    {$item.content|getNewsContent}
+
+                                </p>
+                                <a href="blog-single.html" class="btn btn-md btn-light">浏览详情</a>
+                            </div>
+                        </div>
+                    </article> <!-- end text only post -->
+                    {/volist}
+
+                    {$news|raw}
+
+                    <!-- Pagination -->
+                    <!--<nav class="pagination clear mt-10">-->
+                        <!--<a href="#"><i class="fa ti-arrow-left"></i></a>-->
+                        <!--<span class="page-numbers current">1</span>-->
+                        <!--<a href="#">2</a>-->
+                        <!--<a href="#">3</a>-->
+                        <!--<a href="#">4</a>-->
+                        <!--<a href="#"><i class="ti-arrow-right"></i></a>-->
+                    <!--</nav>-->
+
+                </div> <!-- end col -->
+
+
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </section> <!-- end blog standard -->
+
+
+    {include file="public/footer"}
+
+</div> <!-- end main-wrapper -->
+
+
+</body>
+</html>

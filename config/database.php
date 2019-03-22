@@ -15,11 +15,11 @@ return [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => '',
+    'database'        => 'pull',
     // 用户名
     'username'        => 'root',
     // 密码
-    'password'        => '',
+    'password'        => 'root',
     // 端口
     'hostport'        => '',
     // 连接dsn
@@ -46,10 +46,10 @@ return [
     'fields_strict'   => true,
     // 数据集返回类型
     'resultset_type'  => 'array',
-    // 自动写入时间戳字段
-    'auto_timestamp'  => false,
+    // 自动写入时间戳变默认时间格式字段
+    'auto_timestamp'  => true,
     // 时间字段取出后的默认时间格式
-    'datetime_format' => 'Y-m-d H:i:s',
+    'datetime_format' => 'Y-m-d',
     // 是否需要进行SQL性能分析
     'sql_explain'     => false,
     // Builder类

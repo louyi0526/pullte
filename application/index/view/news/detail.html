@@ -1,0 +1,81 @@
+{include file="public/header"}
+
+<div class="main-wrapper oh">
+
+    <!-- Page Title -->
+    <section class="page-title text-center" style="background-image: url(/static/img/new/new-title.jpg);">
+        <div class="container relative clearfix">
+            <div class="title-holder">
+                <div class="title-text">
+                    <h1>新 闻 详 情</h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index-phone.html">主页</a>
+                        </li>
+                        <li>
+                            <a href="blog-standard.html">新闻活动</a>
+                        </li>
+                        <li class="active">
+                            本页
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section> <!-- end page title -->
+
+    <!-- Blog Single -->
+    <section class="section-wrap post-single pb-70">
+        <div class="container relative">
+            <div class="row">
+
+                <!-- content -->
+                <div class="col-md-10 col-md-offset-1 post-content mb-60">
+
+                    <!-- post -->
+                    <article class="entry-item">
+
+                        <div class="entry mt-0">
+                            <h2 class="entry-title">{$news.title}</h2>
+                            <ul class="entry-meta">
+                                <li class="entry-date">
+                                    0000.00.00
+                                </li>
+                                <li class="entry-author">
+                                    <a href="#">来源</a>
+                                </li>
+                            </ul>
+                            <div class="entry-content">
+                                <p>
+                                    {$news.content|raw}
+                                </p>
+                                <img src="/static/img/video_section_bg01.jpg" alt="img">
+                                <!-- entry share -->
+                                <!-- 分享链接 -->
+                                <!--<div class="entry-share mt-40">-->
+                                <!--<div class="socials-share clearfix">-->
+                                <!--<span>Share:</span>-->
+                                <!--<div class="social-icons">-->
+                                <!--<a href="#" class="social-twitter"><i class="fa fa-twitter"></i></a>-->
+                                <!--<a href="#" class="social-facebook"><i class="fa fa-facebook"></i></a>-->
+                                <!--<a href="#" class="social-google-plus"><i class="fa fa-google-plus"></i></a>-->
+                                <!--<a href="#" class="social-instagram"><i class="fa fa-instagram"></i></a>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div> <!-- end entry content -->
+                        </div>
+                    </article> <!-- end gallery post -->
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </section> <!-- end blog single -->
+
+    {include file="public/footer"}
+
+</div> <!-- end main-wrapper -->
+
+
+
+</body>
+</html>

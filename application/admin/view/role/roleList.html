@@ -1,0 +1,44 @@
+{layout name="public:layout"}
+
+<h4 class="text-center text-success">角色列表</h4>
+
+<table class="table table-default table-hover text-center">
+    <tr>
+        <td>ID</td>
+        <td>角色名称</td>
+        <td>状态</td>
+        <td colspan="2">操作</td>
+    </tr>
+    {volist name="roleList" id="role" empty="$empty"}
+    <tr id="tr_{$role.id}">
+        <td>{$role.id}</td>
+        <td>{$role.role_name}</td>
+        {eq name="$role.status" value="1"}
+        <td style="color: forestgreen">开启</td>
+        {else /}
+        <td style="color: grey">关闭</td>
+        {/eq}
+        <td><a href="{:url('role/roleEdit',['id'=>$role.id])}">配置权限</a></td>
+        <td><a href="" onclick="dele('{$role.id}');return false;">删除</a></td>
+
+
+    </tr>
+    {/volist}
+</table>
+<script>
+    function dele(id) {
+        if (confirm('您是真的要删除吗?')) {
+            $.post({
+                url: "{:url('role/doDelete')}",
+                data: 'id='+id,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1){
+                        $("#tr_"+id).remove();
+                    }
+                    alert(data.msg);
+                }
+            })
+        }
+    }
+</script>

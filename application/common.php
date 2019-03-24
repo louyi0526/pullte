@@ -16,3 +16,12 @@ function getNewsContent($content)
 {
     return mb_substr(strip_tags($content),0,50).'>>>';
 }
+
+//获取用户角色名称
+//function getRoleName($user_id)
+//{
+//    $role_id = Db::table('userrole')->where('user_id', $user_id)->value('role_id');
+//
+//    return Db::table('role')->where('id', $role_id)->value('role_name');
+//
+//}

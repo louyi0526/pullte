@@ -1,0 +1,113 @@
+{layout name="public:layout" /}
+
+<h4 class="text-center text-danger">编辑权限信息</h4>
+<form class="form-horizontal" id="roleInfo">
+    <div class="form-group">
+        <label class=" control-label">
+            你正在为:
+            <span style="color: red;">{$roleInfo.role_name}</span>
+            分配权限
+        </label>
+
+    </div>
+
+    {volist name="rightInfo" id="right"}
+    <div class="form-group" style="margin-right: 20px;
+        {eq name='$right.level' value='3'}
+            float: left;
+        {else /}
+            clear: both;
+        {/eq}
+    ">
+        <div class="checkbox">
+            <label style="text-indent: {$right['level']*20}px;">
+                <input type="checkbox" id="{$right.id}" name="right[]" value="{$right.id}_{$right.level}" pid="{$right.pid}" level="{$right.level}"
+                    {eq name="$right.roleright" value="1"}
+                       checked="checked"
+                    {/eq}>
+                {if $right.level == 1}
+                <span style="color: grey">[项目]</span>
+                {elseif $right.level == 2}
+                <span style="color: forestgreen">[模块]</span>
+                {else /}
+                <span style="color: blue">[操作]</span>
+                {/if}
+                {$right.right_title}
+            </label>
+        </div>
+    </div>
+    {/volist}
+
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="hidden" name="role_id" value="{$roleInfo.id}">
+            <button type="submit" class="btn btn-info" id="doAdd">保存</button>
+        </div>
+    </div>
+</form>
+{load href="/static/js/jquery-1.8.3.min.js" /}
+<script>
+    $(function(){
+
+        $("input").click(function () {
+
+            var level=$(this).attr('level');
+
+            if (level == 1){
+                var str='_';
+                var inputs=$("input[value*="+str+"]");
+                $(this).attr('checked') ? inputs.attr('checked',true) : inputs.removeAttr('checked');
+            }else if (level == 2){
+                var id=$(this).attr('id');
+                var inputs=$("input[pid="+id+"]");
+                $(this).attr('checked') ? inputs.attr('checked',true) : inputs.removeAttr('checked');
+            }else if (level == 3){
+
+                if ($(this).attr('checked')) {
+
+                    var pid=$(this).attr('pid');
+                    $("input[id="+pid+"]").attr('checked',true);
+
+                    var ppid=$("input[id="+pid+"]").attr('pid');
+                    $("input[id="+ppid+"]").attr('checked',true);
+
+                }
+            }
+
+        });
+
+        // $("#doEdit").click(function () {
+        //     // alert($('#roleInfo').serialize());return;
+        //     $.post({
+        //         url:"{:url('role/doEdit')}",
+        //         data:$('#roleInfo').serialize(),
+        //         dataType:'json',
+        //         success:function (data) {
+        //             alert(data.msg);return;
+        //             if (data.status == 1) {
+        //                 location.href="{:url('role/roleList')}";
+        //             }
+        //             alert(data.msg);
+        //         }
+        //     })
+        // });
+
+        $("#doAdd").click(function () {
+            // alert(1);return;
+            $.post({
+                url:"{:url('role/doAddEdit')}",
+                data:$('#userInfo').serialize(),
+                dataType:'json',
+                success:function (data) {
+                    alert(1);return;
+                    if (data.status == 1) {
+                        location.href="{:url('user/userList')}";
+                    }
+                    alert(data.msg);
+                }
+            })
+        });
+    })
+</script>

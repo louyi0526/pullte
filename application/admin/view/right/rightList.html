@@ -1,0 +1,50 @@
+{layout name="public:layout"}
+
+<h4 class="text-center text-success">权限列表</h4>
+
+<table class="table table-default table-hover text-center">
+    <tr>
+        <td>ID</td>
+        <td>结构</td>
+        <td>名称</td>
+        <td>类型</td>
+        <td colspan="2">操作</td>
+    </tr>
+    {volist name="rightList" id="right" empty="$empty"}
+    <tr id="tr_{$right.id}">
+        <td>{$right.id}</td>
+        <td>
+            <p style="text-indent:{$right['level']*20}px;">{neq name="$right.level" value="1"}　- {/neq}{$right.right_title}</p>
+        </td>
+        <td>{$right.right_name}</td>
+
+        {if $right.level == 1}
+        <td style="color: grey">项目</td>
+        {elseif $right.level == 2}
+        <td style="color: forestgreen">模块</td>
+        {else /}
+        <td style="color: blue">操作</td>
+        {/if}
+        <td><a href="" onclick="dele('{$right.id}');return false;">删除</a></td>
+
+
+    </tr>
+    {/volist}
+</table>
+<script>
+    function dele(id) {
+        if (confirm('您是真的要删除吗?')) {
+            $.post({
+                url: "{:url('right/doDelete')}",
+                data: 'id='+id,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1){
+                        $("#tr_"+id).remove();
+                    }
+                    alert(data.msg);
+                }
+            })
+        }
+    }
+</script>

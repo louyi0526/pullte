@@ -1,0 +1,178 @@
+
+@media (max-width: 1199px) {
+
+	.gallery-cell.work-item {
+		width: 50%;
+	}
+
+  .contact-item {
+  	padding-left: 30px;
+  }
+
+}
+
+
+@media (max-width: 991px) {
+
+	.section-wrap {
+	  padding: 80px 0;
+	}
+	
+	.nav-wrap {
+		width: 100%;
+	}
+
+	.nav-type-2 .logo-container {
+    position: absolute;
+    top: 0;
+	}
+
+	.navbar-header,
+	.logo-wrap > a {
+		height: 60px;
+	}
+
+	.navigation-overlay {
+    background-color: #181c21;
+	}
+
+	.nav-type-1 #nav-icon {
+		top: 5px;
+	}
+
+	.nav-type-2 .nav.navbar-nav {
+		padding: 30px 0;
+		text-align: center;
+	}
+
+	.nav-type-2 .navbar-nav > li > a {
+		line-height: 50px;
+	}
+
+	.nav-type-2 .navbar-nav > li.active > a {
+		color: #e0b571;
+	}
+
+	.nav-wrap {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+	}
+
+	.navbar-collapse {
+		border-top: 1px solid rgba(144,144,144,.3);
+	}
+
+	.gallery-cell.work-item {
+		width: 60%;
+	}
+
+	.blog-standard .post-content {
+		padding-right: 15px;
+	}
+
+	.page-title .container {
+		height: 300px;
+	}
+
+	.title-text h1 {
+		font-size: 32px;
+		margin-top: 45px;
+	}
+
+	.padding-box {
+	  padding: 0;
+	}
+
+	.top-space, .bottom-space {
+	  height: 0;
+	}
+
+	.navbar-fixed-top {
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .footer {
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  }
+
+  .testimonials {
+  	padding: 80px 20px;
+  }
+
+  .parallax-promo h3 {
+  	font-size: 50px;
+  }
+}
+
+
+@media (max-width: 767px) {
+
+	.container-fluid.semi-fluid {
+		padding: 0 15px;
+	}
+
+	.footer-spacer,
+	.footer {
+		height: 320px;
+	}
+
+	.footer .footer-widgets {
+		padding: 70px 0 30px;
+	}
+
+	.gallery-cell.work-item {
+		width: 100%;
+	}
+
+	.gallery-cell {
+		width: 100%;
+		margin: 0;
+	}
+
+}
+
+
+@media (max-width: 640px) {
+  .works-grid .work-item,
+  .team-wrap  {
+    width: 100% !important;
+  }
+
+  .partners .row > [class^=col] {
+  	width: 100%;
+  	text-align: center;
+  }
+
+}
+
+@media (max-width: 540px) {
+
+  .container-fluid .works-grid.small-gutter {
+  	margin: 0;
+  }
+
+  .works-grid.small-gutter .work-item {
+  	padding: 0;
+  }
+
+  .overlay-menu ul li a {
+  	font-size: 18px;
+  }
+
+  .nav-tabs > li {
+  	width: 100%;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+
+}
+

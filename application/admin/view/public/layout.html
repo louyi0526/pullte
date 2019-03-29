@@ -15,11 +15,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2" style="border-right:2px solid #e7e7e7;padding-left:50px;">
             {include file="public:left" /}
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10" style="padding-left:50px;">
+            {gt name="$str" value="0"}
             {__CONTENT__}
+            {else /}
+            没有权限
+            {/gt}
         </div>
     </div>
 

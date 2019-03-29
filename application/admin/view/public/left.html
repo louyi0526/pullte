@@ -1,30 +1,14 @@
 
+{volist name="$leftInfo" id="left"}
 <ul class="nav nav-pills nav-stacked">
-    <li class="nav-header h3">系统管理</li>
-    <li><a href="{:url('site/index')}"><span class="glyphicon glyphicon-cog"></span>&nbsp;网站管理</a></li>
-</ul>
+    {if $Think.session.role_id == 1 && $left.level == 1}
+    <li class="nav-header h3">{$left.right_title}</li>
+    <li><a href="{:url('site/index')}">&nbsp;网站管理</a></li>
+    {elseif $left.level == 2 /}
+    <li class="nav-header h3">{$left.right_title}</li>
 
-<ul class="nav nav-pills nav-stacked">
-    <li class="nav-header h3">角色管理</li>
-    <li><a href="{:url('role/roleList')}"><span class="glyphicon glyphicon-user"></span>&nbsp;角色列表</a></li>
-    <li><a href="{:url('role/roleAdd')}"><span class="glyphicon glyphicon-user"></span>&nbsp;添加角色</a></li>
+    {elseif $left.level != 1 /}
+    <li><a href="/admin/{$left.module}">&nbsp;{$left.right_title}</a></li>
+    {/if}
 </ul>
-
-<ul class="nav nav-pills nav-stacked">
-    <li class="nav-header h3">权限管理</li>
-    <li><a href="{:url('right/rightList')}"><span class="glyphicon glyphicon-user"></span>&nbsp;权限列表</a></li>
-    <li><a href="{:url('right/rightAdd')}"><span class="glyphicon glyphicon-user"></span>&nbsp;添加权限</a></li>
-</ul>
-
-<ul class="nav nav-pills nav-stacked">
-    <li class="nav-header h3">用户管理</li>
-    <li><a href="{:url('user/userList')}"><span class="glyphicon glyphicon-user"></span>&nbsp;用户列表</a></li>
-    <li><a href="{:url('user/userAdd')}"><span class="glyphicon glyphicon-user"></span>&nbsp;添加用户</a></li>
-</ul>
-
-<ul class="nav nav-pills nav-stacked">
-    <li class="nav-header h3">文章管理</li>
-
-    <li><a href="{:url('cate/cateList')}"><span class="glyphicon glyphicon-lock"></span>&nbsp;分类管理</a></li>
-    <li><a href="{:url('article/artList')}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;文章管理</a></li>
-</ul>
+{/volist}

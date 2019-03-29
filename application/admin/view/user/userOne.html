@@ -1,0 +1,67 @@
+{layout name="public:layout" /}
+
+<h4 class="text-center text-danger">个人用户信息</h4>
+<form class="form-horizontal" method="post" id="userInfo">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">用户名称</label>
+        <label class="col-sm-1 control-label">{$userList.login_name}</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">最近登录时间</label>
+        <label class="col-sm-2 control-label">{$userList.login_time|date='Y-m-d H:i'}</label>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">上次登录时间</label>
+        <label class="col-sm-2 control-label">{$userList.last_login_time|date='Y-m-d H:i'}</label>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">修改密码</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="password" >
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">确认密码</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="password_confirm" >
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">手机号码</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="mobile" value="{$userList.mobile}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="hidden" value="{$Think.session.admin_id}" name="user_id" />
+            <button type="button" id="doEdit" class="btn btn-info">修改</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(function () {
+        $("#doEdit").click(function () {
+            // alert(1);return;
+            if (confirm('确认修改?')){
+                $.post({
+                    url: "{:url('user/doEditOne')}",
+                    data: $('#userInfo').serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+
+                        if (data.status == 1) {
+                            location.href = "{:url('user/userList')}";
+                        }
+                        alert(data.msg);
+                    }
+                })
+            }
+        });
+    })
+</script>

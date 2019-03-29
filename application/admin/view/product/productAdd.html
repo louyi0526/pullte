@@ -1,0 +1,99 @@
+{layout name="public:layout" /}
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/zh-cn.js"></script>
+<h4 class="text-center text-danger">添加产品</h4>
+<form class="form-horizontal" method="post" id="productInfo" enctype="multipart/form-data">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">产品缩略图</label>
+        <div class="col-sm-10">
+
+            <a data-original-title="" href="javascript:;" id="addupload">
+                <img src="/static/img/portfolio/1.jpg" id="coverimg" class="img-thumbnail">
+            </a>
+            <input type="file" class="form-control" name="title_img" id="img_url" style="display: none;">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">产品标题</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="title">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">产品状态</label>
+        <div class="col-sm-10">
+            <label class="radio-inline">
+                <input type="radio" name="status"  value="1" checked> 显示
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="status" value="0"> 隐藏
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="content" class="col-sm-2 control-label">产品内容</label>
+        <div class="col-sm-10">
+            <textarea name="content" id="content" ></textarea>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" id="doAdd" class="btn btn-info">新增</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(function () {
+        UE.getEditor('content',{
+            initialFrameHeight:500
+        });
+
+        $("#doAdd").click(function () {
+            // alert(1);return;
+
+            let formData = new FormData($('#productInfo')[0]);
+
+            $.post({
+                url:"{:url('product/doAdd')}",
+                cache:false,
+                contentType:false,
+                processData:false,
+                data:formData,
+                dataType:'json',
+                success:function (data) {
+                    if (data.status == 1) {
+                        location.href="{:url('product/productList')}";
+                    }
+                    alert(data.msg);
+                }
+            })
+        });
+        $("#img_url").bind("change", function(){
+            var objUrl = getObjectURL(this.files[0])
+            $("#coverimg").attr('src',objUrl);
+        });
+
+        $("#addupload").click(function () {
+            $("#img_url").click();
+        })
+
+    });
+    function getObjectURL(file){
+        var url=null
+        if(window.createObjectURL!=undefined){ // basic
+            url=window.createObjectURL(file)
+        }else if(window.URL!=undefined){ // mozilla(firefox)
+            url=window.URL.createObjectURL(file)
+        } else if(window.webkitURL!=undefined){ // webkit or chrome
+            url=window.webkitURL.createObjectURL(file)
+        }
+        return url  ;
+    }
+</script>

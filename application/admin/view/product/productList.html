@@ -1,0 +1,49 @@
+{layout name="public:layout" /}
+
+
+<h4 class="text-center text-success">产品列表</h4>
+
+<table class="table table-default table-hover text-center">
+    <tr>
+        <td>ID</td>
+        <td style="width:250px;">标题</td>
+        <td>状态</td>
+        <td>发布时间</td>
+        <td colspan="2">操作</td>
+    </tr>
+    {volist name="productList" id="product" empty="$empty"}
+    <tr id="tr_{$product.id}">
+        <td>{$product.id}</td>
+        <td>{$product.title}</td>
+        {eq name="$product.status" value="1"}
+        <td style="color: forestgreen">显示</td>
+        {else /}
+        <td style="color: grey">隐藏</td>
+        {/eq}
+        <td>{$product.create_time}</td>
+        <td><a href="{:url('product/productEdit',['id'=>$product.id])}">编辑</a></td>
+        <td><a href="" onclick="dele('{$product.id}');return false;">删除</a></td>
+    </tr>
+    {/volist}
+</table>
+<div class="text-center">
+    {$productList|raw}
+</div>
+
+<script>
+    function dele(id) {
+        if (confirm('您是真的要删除吗?')) {
+            $.post({
+                url: "{:url('product/doDelete')}",
+                data: 'id='+id,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1){
+                        $("#tr_"+id).remove();
+                    }
+                    alert(data.msg);
+                }
+            })
+        }
+    }
+</script>

@@ -1,0 +1,56 @@
+{layout name="public:layout" /}
+
+<h4 class="text-center text-danger">添加用户</h4>
+<form class="form-horizontal" method="post" id="userInfo">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">用户名称</label>
+        <div class="col-sm-10">
+            <label class="control-label">{$userInfo.login_name}</label>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">所属用户组</label>
+        <div class="col-sm-10">
+            <select name="role_id" class="form-control">
+
+                {volist name="$role" id="item"}
+
+                <option value="{$item.id}" {eq name="$userInfo.role_id" value="$item.id"}selected{/eq}>{$item.role_name}</option>
+
+                {/volist}
+
+            </select>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="hidden" value="{$userInfo.id}" name="user_id">
+            <button type="button" id="doEdit" class="btn btn-info">修改</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(function () {
+        $("#doEdit").click(function () {
+            // alert(1);return;
+            $.post({
+                url:"{:url('user/doEdit')}",
+                data:$('#userInfo').serialize(),
+                dataType:'json',
+                success:function (data) {
+
+                    if (data.status == 1) {
+                        location.href="{:url('user/userList')}";
+                    }
+                    alert(data.msg);
+                }
+            })
+        });
+    })
+</script>

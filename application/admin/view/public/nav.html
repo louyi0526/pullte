@@ -17,7 +17,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav navbar-right">
-                        {if $Think.session.id}
+                        {if $Think.session.admin_id}
                         <li><a href="#">{$Think.session.login_name}{//模板中输出系统变量写法}</a></li>
                         <li><a href="{:url('user/logout')}">退出</a></li>
                         {/if}

@@ -20,7 +20,7 @@ class Role extends Base
     //角色列表界面
     public function roleList()
     {
-
+        $this->isLogin();
         $roleList = RoleModel::select();
         $this->view->assign('roleList',$roleList);
 
@@ -33,6 +33,7 @@ class Role extends Base
     //角色添加界面
     public function roleAdd()
     {
+        $this->isLogin();
         return $this->view->fetch('roleAdd');
     }
 
@@ -68,6 +69,7 @@ class Role extends Base
     //角色权限配置编辑界面
     public function roleEdit()
     {
+        $this->isLogin();
         //获取修改角色的信息
         $roleId = Request::param('id');
 
@@ -100,9 +102,40 @@ class Role extends Base
     }
 
     //角色权限配置编辑操作
-    public function doAddEdit(){
-        return ['msg'=>'123'];
+    public function doEdit(){
+
         $roleInfo = Request::post();
-        return ['status'=> -1,'msg'=>$roleInfo['role_id']];
+
+        $role_id = $roleInfo['role_id'];
+        $count = Db::table('roleright')
+            ->where('role_id',$role_id)
+            ->count();
+
+        if ($count){
+            Db::table('roleright')->where('role_id',$role_id)->delete();
+        }
+
+        $right=$roleInfo['right'];
+        $data=array();
+        foreach ($right as $value){
+            $tmp = explode("_",$value);
+            $right_name = Db::table('right')->field('pid,right_name')->where('id',$tmp[0])->find();
+            $p_right_name='';
+            if ($right_name['pid'] > 0){
+                $p_right_name = Db::table('right')->field('right_name')->where('id',$right_name['pid'])->find();
+                $right_name['right_name']=$p_right_name['right_name'].'/'.$right_name['right_name'];
+            }
+            $data[]=array(
+                'role_id'=>$role_id,
+                'right_id'=>$tmp[0],
+                'level'=>$tmp[1],
+                'module'=>$right_name['right_name'],
+            );
+        }
+
+        if (Db::table('roleright')->data($data)->insertAll()){
+            return ['status'=> 1,'msg'=>'角色权限配置成功'];
+        }
+        return ['status'=> -1,'msg'=>'角色权限配置失败'];
     }
 }

@@ -11,13 +11,16 @@ namespace app\admin\controller;
 
 use app\admin\common\controller\Base;
 use app\admin\common\model\Right as RightModel;
+use think\Db;
 use think\facade\Request;
+use think\facade\Session;
 
 class Right extends Base
 {
     //权限列表界面
     public function rightList()
     {
+        $this->isLogin();
         $rightList = RightModel::all();
 
         $rightList = $this->tree($rightList);
@@ -28,6 +31,7 @@ class Right extends Base
     //添加权限界面
     public function rightAdd()
     {
+        $this->isLogin();
         $level = RightModel::where('level != 3')->select();
         $this->view->assign('level',$level);
         return $this->view->fetch('rightAdd');
@@ -45,11 +49,37 @@ class Right extends Base
             return ['status' => 0, 'msg' => $res];
         }
 
-        $data['password'] = md5($data['password']);
+        $rightId = RightModel::create($data);
 
-        if (RightModel::create($data))
+        if ($rightId)
         {
-            return ['status'=>1,'msg'=>'权限添加成功'];
+
+            /*
+             * 权限添加成功后
+             * 1.root用户角色直接添加此权限
+             * 2.session用户角色不是root时,session用户角色需要添加此权限
+             * */
+
+            $right_name=RightModel::field('right_name')->where('id',$data['pid'])
+                ->find();
+            $roleRightData['role_id']= 1;
+            $roleRightData['level']= $data['level'];
+            $roleRightData['right_id']= $rightId['id'];
+            $roleRightData['module']= $right_name['right_name'].'/'.$data['right_name'];
+
+            if (Db::table('roleright')->insert($roleRightData)) {
+
+                if (Session::get('role_id') == 1) {
+                    return ['status'=>1,'msg'=>'权限添加成功'];
+                }else {
+                    $roleRightData['role_id']=Session::get('role_id');
+                    if (Db::table('roleright')->insert($roleRightData)){
+                        return ['status'=>1,'msg'=>'权限添加成功'];
+                    }
+                }
+
+            }
+
         }
         return ['status'=>0,'msg'=>'权限删除失败'];
     }

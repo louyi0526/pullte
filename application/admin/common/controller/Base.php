@@ -5,6 +5,7 @@
 
 namespace app\admin\common\controller;
 use think\Controller;
+use think\Db;
 use think\facade\Session;
 
 class Base extends Controller
@@ -14,8 +15,7 @@ class Base extends Controller
      */
     protected function initialize()
     {
-
-
+        $this->roleRightInfo();
     }
 
     /**
@@ -25,7 +25,7 @@ class Base extends Controller
     public function isLogin()
     {
         if (!Session::has('admin_id')){
-            $this->redirect('admin/user/login',302);
+            $this->redirect('/admin/user',302);
         }
     }
 
@@ -42,6 +42,35 @@ class Base extends Controller
 
         }
         return self::$treeList;
+    }
+
+    //left与layout是否权限信息
+    public function roleRightInfo()
+    {
+        $roleId = Session::get('role_id');
+
+        $join = [
+            ['right b','a.right_id=b.id'],
+        ];
+
+        $leftInfo = Db::table('roleright')
+            ->field('b.right_name,b.right_title,b.pid,b.id,b.level,a.module')
+            ->alias('a')
+            ->join($join)
+            ->where('a.role_id',$roleId)
+            ->select();
+
+        $data=explode("/",url());
+        $str=0;
+        foreach ($leftInfo as $val){
+            $rel = explode("/",$val['module']);
+            if ($rel[0] == $data[2]){
+                $str=$str+1;
+            }
+        }
+        $this->view->assign('str',$str);
+        $this->view->assign('leftInfo',$leftInfo);
+        return $leftInfo;
     }
 
 
